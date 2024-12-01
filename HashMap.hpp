@@ -3,14 +3,17 @@
 // Son, Omar, Esther
 // Nov, 2024
 // This is the header file with definitions of functions for the HashMap class.
+/*
+For the implementation of HashMap, we use Vectors.
+*/
 //=========================================================
 
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
-#include <vector>
-#include <list>
-#include <utility>
+#include <vector> //outer container
+#include <list> //inner container
+#include <utility> //store key value-pair in the hash table
 #include <stdexcept>
 #include "MyHashFunction.hpp"
 

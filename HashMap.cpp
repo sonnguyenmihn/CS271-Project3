@@ -3,6 +3,8 @@
 // Son, Omar, Esther
 // Nov, 2024
 // This is the implementation file for the HashMap class.
+//Implementation is done with Vectors, we didn't use 
+// doubly linked lists
 //=========================================================
 
 #include "HashMap.hpp"
