@@ -13,6 +13,7 @@
 using namespace std;
 
 //=========================================================
+// Omar  
 // Default constructor for HashMapTree.
 // Initializes the hash map with a default size of 100 and prepares
 // the hash function and table.
@@ -25,6 +26,7 @@ template <class K, class V>
 HashMapTree<K, V>::HashMapTree() : size(100), numberOfElements(0), hashFn(), table(100) {}
 
 //=========================================================
+// Omar 
 // Parameterized constructor for HashMapTree.
 // Initializes the hash map with the specified size.
 // The length should be less than 100001
@@ -37,6 +39,7 @@ template <class K, class V>
 HashMapTree<K, V>::HashMapTree(long length) : size(length), numberOfElements(0), hashFn(), table(length) {}
 
 //=========================================================
+// Omar 
 // Copy constructor for HashMapTree.
 // Copies the contents of another HashMapTree into this instance.
 // Parameters:
@@ -51,6 +54,7 @@ HashMapTree<K, V>::HashMapTree(const HashMapTree<K, V> &copy)
 }
 
 //=========================================================
+// Omar 
 // Destructor for HashMapTree.
 // Performs cleanup if necessary (handled automatically)
 // Parameters:
@@ -65,6 +69,7 @@ HashMapTree<K, V>::~HashMapTree()
 }
 
 //=========================================================
+// OMar 
 // Assignment operator for HashMapTree.
 // Deep copy the contents of another HashMapTree into this instance.
 // Parameters:
@@ -86,6 +91,7 @@ HashMapTree<K, V> &HashMapTree<K, V>::operator=(const HashMapTree<K, V> &copy)
 }
 
 //=========================================================
+// Omar 
 // Inserts a key-value pair into the hash map.
 // Updates the value if the key already exists.
 // Parameters:
@@ -116,6 +122,7 @@ void HashMapTree<K, V>::insert(const K &key, const V &value)
 }
 
 //=========================================================
+// Omar 
 // Removes a specific key-value pair from the hash map.
 // Parameters:
 //  item: A pointer to the node containing the pair to remove.
@@ -132,6 +139,7 @@ void HashMapTree<K, V>::remove(RBTreeNode<pair<K, V>> *item)
 }
 
 //=========================================================
+// Omar 
 // Accesses the value associated with a key in the hash map.
 // If the key does not exist, throws an exception.
 // Parameters:
@@ -154,6 +162,7 @@ V &HashMapTree<K, V>::operator[](const K &key)
 }
 
 //=========================================================
+// OMar 
 // Searches for a key in the hash map.
 // Parameters:
 //  key: The key to search for.

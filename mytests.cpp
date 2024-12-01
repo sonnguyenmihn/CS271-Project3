@@ -243,3 +243,4 @@ void test_HashMapTree_search(int &testPassed, int &testFailed) {
         cout << "Failed test_HashMapTree_search: Exception caught" << endl;
     }
 }
+
