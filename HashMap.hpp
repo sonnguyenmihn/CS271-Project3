@@ -30,7 +30,7 @@ public:
 private:
     size_t tableSize;
     size_t numElements;
-    CustomHashFunction<K> hashFunction;
+    MyHashFunction<K> hashFunction;
     vector<vector<pair<K, V>>> table;
 };
 

@@ -6,6 +6,7 @@
 //=========================================================
 #include "customexceptions.hpp"
 #include "HashMapTree.hpp"
+#include "HashMap.hpp"
 #include <iostream>
 #include <string>
 
