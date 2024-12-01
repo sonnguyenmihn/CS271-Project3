@@ -34,7 +34,7 @@ private:
     size_t tableSize;
     size_t numElements;
     MyHashFunction<K> hashFunction;
-    vector<vector<pair<K, V>>> table;
+    vector<vector<pair<K, V>>> table; //table
 };
 
 #endif
