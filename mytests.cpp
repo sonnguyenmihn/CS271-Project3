@@ -4,6 +4,7 @@
 // Nov, 2024
 // This is the test file for 3 classes: HashMapTree, HashMap, and Set
 //=========================================================
+#include "customexceptions.hpp"
 #include "HashMapTree.hpp"
 #include <iostream>
 #include <string>

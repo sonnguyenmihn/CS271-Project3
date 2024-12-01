@@ -12,21 +12,17 @@
 #include "RBTreeNode.hpp"
 using namespace std;
 
-
-
-
 //=========================================================
 // Default constructor for HashMapTree.
-// Initializes the hash map with a default size of 100 and prepares 
+// Initializes the hash map with a default size of 100 and prepares
 // the hash function and table.
 // Parameters:
 //  None
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
+template <class K, class V>
 HashMapTree<K, V>::HashMapTree() : size(100), numberOfElements(0), hashFn(), table(100) {}
-
 
 //=========================================================
 // Parameterized constructor for HashMapTree.
@@ -37,9 +33,8 @@ HashMapTree<K, V>::HashMapTree() : size(100), numberOfElements(0), hashFn(), tab
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
+template <class K, class V>
 HashMapTree<K, V>::HashMapTree(long length) : size(length), numberOfElements(0), hashFn(), table(length) {}
-
 
 //=========================================================
 // Copy constructor for HashMapTree.
@@ -49,11 +44,11 @@ HashMapTree<K, V>::HashMapTree(long length) : size(length), numberOfElements(0),
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
-HashMapTree<K, V>::HashMapTree(const HashMapTree& copy) {
+template <class K, class V>
+HashMapTree<K, V>::HashMapTree(const HashMapTree<K, V> &copy)
+{
     *this = copy;
 }
-
 
 //=========================================================
 // Destructor for HashMapTree.
@@ -63,11 +58,11 @@ HashMapTree<K, V>::HashMapTree(const HashMapTree& copy) {
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
-HashMapTree<K, V>::~HashMapTree() {
+template <class K, class V>
+HashMapTree<K, V>::~HashMapTree()
+{
     return;
 }
-
 
 //=========================================================
 // Assignment operator for HashMapTree.
@@ -77,9 +72,11 @@ HashMapTree<K, V>::~HashMapTree() {
 // Returns:
 //  Reference to the current HashMapTree after assignment.
 //=========================================================
-template<class K, class V>
-HashMapTree<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& copy) {
-    if (this != &copy) {
+template <class K, class V>
+HashMapTree<K, V> &HashMapTree<K, V>::operator=(const HashMapTree<K, V> &copy)
+{
+    if (this != &copy)
+    {
         size = copy.size;
         numberOfElements = copy.numberOfElements;
         hashFn = copy.hashFn;
@@ -87,7 +84,6 @@ HashMapTree<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& copy) {
     }
     return *this;
 }
-
 
 //=========================================================
 // Inserts a key-value pair into the hash map.
@@ -98,20 +94,22 @@ HashMapTree<K, V>& HashMapTree<K, V>::operator=(const HashMapTree<K, V>& copy) {
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
-void HashMapTree<K, V>::insert(const K& key, const V& value) {
-    pair<K, V>* ptr = search(key);
-    if (ptr != nullptr) {
+template <class K, class V>
+void HashMapTree<K, V>::insert(const K &key, const V &value)
+{
+    pair<K, V> *ptr = search(key);
+    if (ptr != nullptr)
+    {
         ptr->second = value;
     }
-    else {
+    else
+    {
         long hashVal = hashFn.getHash(key) % size;
         pair<K, V> p = make_pair(key, value);
         table[hashVal].insert(p);
         numberOfElements++;
     }
 }
-
 
 //=========================================================
 // Removes a specific key-value pair from the hash map.
@@ -120,13 +118,13 @@ void HashMapTree<K, V>::insert(const K& key, const V& value) {
 // Returns:
 //  None
 //=========================================================
-template<class K, class V>
-void HashMapTree<K, V>::remove(RBTreeNode<pair<K, V>>* item) {
+template <class K, class V>
+void HashMapTree<K, V>::remove(RBTreeNode<pair<K, V>> *item)
+{
     long hashVal = hashFn.getHash(item->val.first) % size;
     table[hashVal].remove(item);
     numberOfElements--;
 }
-
 
 //=========================================================
 // Accesses the value associated with a key in the hash map.
@@ -136,17 +134,19 @@ void HashMapTree<K, V>::remove(RBTreeNode<pair<K, V>>* item) {
 // Returns:
 //  Reference to the value associated with the key.
 //=========================================================
-template<class K, class V>
-V& HashMapTree<K, V>::operator[](const K& key) {
-    pair<K, V>* ptr = search(key);
-    if ( ptr == nullptr) {
-        throw out_of_range("Key not found in the hash table");
+template <class K, class V>
+V &HashMapTree<K, V>::operator[](const K &key)
+{
+    pair<K, V> *ptr = search(key);
+    if (ptr == nullptr)
+    {
+        throw unhashable_key("Key not found in the hash table");
     }
-    else {
+    else
+    {
         return ptr->second;
     }
 }
-
 
 //=========================================================
 // Searches for a key in the hash map.
@@ -155,20 +155,25 @@ V& HashMapTree<K, V>::operator[](const K& key) {
 // Returns:
 //  Pointer to the pair containing the key and value, or nullptr if not found.
 //=========================================================
-template<class K, class V>
-pair<K, V>* HashMapTree<K, V>::search(const K& key) {
+template <class K, class V>
+pair<K, V> *HashMapTree<K, V>::search(const K &key)
+{
 
     long hashVal = hashFn.getHash(key) % size;
-    RBTreeNode<pair<K, V>>* current = table[hashVal].root;
+    RBTreeNode<pair<K, V>> *current = table[hashVal].root;
 
-    while (current != nullptr) {
-        if (current->val.first == key) {
+    while (current != nullptr)
+    {
+        if (current->val.first == key)
+        {
             return &(current->val);
         }
-        if (current->val.first < key) {
+        if (current->val.first < key)
+        {
             current = current->right;
         }
-        else { 
+        else
+        {
             current = current->left;
         }
     }
