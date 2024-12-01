@@ -1,3 +1,10 @@
+//=========================================================
+// HashMapTree.hpp
+// Son, Omar, Esther
+// Nov, 2024
+// This is the header file with definitions of functions for the HashMap class.
+//=========================================================
+
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
@@ -16,7 +23,7 @@ public:
     ~HashMap();
 
     void insert(const K& key, const V& value);
-    void remove(const K& key);
+    void remove(const pair<K, V>* deleted);
     V& operator[](const K& key);
     pair<K, V>* search(const K& key);
 
@@ -24,7 +31,7 @@ private:
     size_t tableSize;
     size_t numElements;
     CustomHashFunction<K> hashFunction;
-    vector<list<pair<K, V>>> table;
+    vector<vector<pair<K, V>>> table;
 };
 
 #endif

@@ -97,13 +97,17 @@ HashMapTree<K, V> &HashMapTree<K, V>::operator=(const HashMapTree<K, V> &copy)
 template <class K, class V>
 void HashMapTree<K, V>::insert(const K &key, const V &value)
 {
+    // Check if the same key already exist in the hash table
     pair<K, V> *ptr = search(key);
+
     if (ptr != nullptr)
     {
+        // Overwrite the value
         ptr->second = value;
     }
     else
     {
+        // Insert a new pair
         long hashVal = hashFn.getHash(key) % size;
         pair<K, V> p = make_pair(key, value);
         table[hashVal].insert(p);
@@ -121,6 +125,7 @@ void HashMapTree<K, V>::insert(const K &key, const V &value)
 template <class K, class V>
 void HashMapTree<K, V>::remove(RBTreeNode<pair<K, V>> *item)
 {
+    // Assume that item is a valid pointer to a node
     long hashVal = hashFn.getHash(item->val.first) % size;
     table[hashVal].remove(item);
     numberOfElements--;
@@ -140,7 +145,7 @@ V &HashMapTree<K, V>::operator[](const K &key)
     pair<K, V> *ptr = search(key);
     if (ptr == nullptr)
     {
-        throw unhashable_key("Key not found in the hash table");
+        throw key_not_found("Key not found in the hash table");
     }
     else
     {
@@ -162,6 +167,7 @@ pair<K, V> *HashMapTree<K, V>::search(const K &key)
     long hashVal = hashFn.getHash(key) % size;
     RBTreeNode<pair<K, V>> *current = table[hashVal].root;
 
+    // Search in the tree for the matched key
     while (current != nullptr)
     {
         if (current->val.first == key)

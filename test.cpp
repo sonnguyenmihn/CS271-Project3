@@ -12,7 +12,7 @@ int main() {
 
     // Calculate the iterator to the pair
     auto it = vec.begin() + (ptr - &vec[0]); // Compute iterator from pointer
-
+    cout << ptr << endl;
     // Erase the pair from the vector
     vec.erase(it);
 

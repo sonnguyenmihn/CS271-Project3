@@ -35,12 +35,12 @@ public:
 };
 
 
-class unhashable_key : public exception {
+class key_not_found : public exception {
 private:
     const char* message;
 public:
     // Constructor
-    unhashable_key(const char* msg) {
+    key_not_found(const char* msg) {
         message = msg;
     }
 
