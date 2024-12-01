@@ -8,8 +8,8 @@
 //=========================================================
 
 #include "HashMap.hpp"
-#include <utility>
-#include <vector>
+#include "customexceptions.hpp"
+
 
 using namespace std;
 
@@ -23,9 +23,8 @@ using namespace std;
 //=========================================================
 template <typename K, typename V>
 HashMap<K, V>::HashMap(size_t size)
-    : tableSize(size), numElements(0), hashFunction(size), table(size) {
-        
-    }
+    : tableSize(size), numElements(0), table(size) {}
+
 
 
 //=========================================================
@@ -51,7 +50,7 @@ HashMap<K, V>::~HashMap() = default;
 //=========================================================
 template <typename K, typename V>
 void HashMap<K, V>::insert(const K& key, const V& value) {
-    size_t index = hashFunction.getHash(key) % tableSize;
+    size_t index = hashFunction(key) % tableSize;
     for (auto& pair : table[index]) {
         if (pair.first == key) {
             pair.second = value;
@@ -74,12 +73,19 @@ void HashMap<K, V>::insert(const K& key, const V& value) {
 //  in the correct bucket or is invalid.
 //=========================================================
 template <typename K, typename V>
-void HashMap<K, V>::remove(const pair<K, V>* deleted) {
-    size_t index = hashFunction.getHash(deleted->first) % tableSize;
-    auto iter = table[index].begin() + deleted - &table[index][0];
-    table[index].erase(iter);
-    --numElements;
+void HashMap<K, V>::remove(const K& key) {
+    size_t index = hashFunction(key) % tableSize;
+
+    for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+        if (it->first == key) {
+            table[index].erase(it);
+            --numElements;
+            return;
+        }
+    }
+    throw invalid_argument("Key not found");
 }
+
 
 
 //=========================================================
@@ -90,17 +96,17 @@ void HashMap<K, V>::remove(const pair<K, V>* deleted) {
 // Returns:
 //  A reference to the value associated with the key.
 // Throws:
-//  key_not_found exception if the key does not exist in the map.
+//  invalid_argument exception if the key does not exist in the map.
 //=========================================================
 template <typename K, typename V>
 V& HashMap<K, V>::operator[](const K& key) {
-    size_t index = hashFunction.getHash(key) % tableSize;
+    size_t index = hashFunction(key) % tableSize;
     for (auto& pair : table[index]) {
         if (pair.first == key) {
             return pair.second;
         }
     }
-    throw key_not_found("Key not found");
+    throw invalid_argument("Key not found");
 }
 
 
@@ -113,7 +119,7 @@ V& HashMap<K, V>::operator[](const K& key) {
 //=========================================================
 template <typename K, typename V>
 pair<K, V>* HashMap<K, V>::search(const K& key) {
-    size_t index = hashFunction.getHash(key) % tableSize;
+    size_t index = hashFunction(key) % tableSize;
     for (auto& pair : table[index]) {
         if (pair.first == key) {
             return &pair;
@@ -121,3 +127,7 @@ pair<K, V>* HashMap<K, V>::search(const K& key) {
     }
     return nullptr;
 }
+// Explicit template instantiations
+template class HashMap<int, string>;
+template class HashMap<int, int>;
+template class HashMap<string, string>;

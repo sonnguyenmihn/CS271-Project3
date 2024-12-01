@@ -1,10 +1,11 @@
-mytests: mytests.o
-	g++ -std=c++20 -o mytests mytests.o
-	./mytests
+mytests: mytests.o HashMap.o
+	g++ -std=c++2a -o mytests mytests.o HashMap.o
 
-mytests.o: mytests.cpp customexceptions.hpp HashMap.hpp HashMapTree.hpp Set.hpp MyHashFunction.hpp RBTree.hpp RBTreeNode.hpp
-	g++ -std=c++20 -o mytests.o -c mytests.cpp
+mytests.o: mytests.cpp HashMap.hpp
+	g++ -std=c++2a -c mytests.cpp -o mytests.o
+
+HashMap.o: HashMap.cpp HashMap.hpp customexceptions.hpp
+	g++ -std=c++2a -c HashMap.cpp -o HashMap.o
 
 clean:
-	rm *.o mytests
-	clear
+	rm -f *.o mytests

@@ -1,21 +1,9 @@
-//=========================================================
-// HashMapTree.hpp
-// Son, Omar, Esther
-// Nov, 2024
-// This is the header file with definitions of functions for the HashMap class.
-/*
-For the implementation of HashMap, we use Vectors.
-*/
-//=========================================================
-
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
-#include <vector> //outer container
-#include <list> //inner container
-#include <utility> //store key value-pair in the hash table
+#include <vector>
 #include <stdexcept>
-#include "MyHashFunction.hpp"
+#include <functional>
 
 using namespace std;
 
@@ -26,15 +14,15 @@ public:
     ~HashMap();
 
     void insert(const K& key, const V& value);
-    void remove(const pair<K, V>* deleted);
+    void remove(const K& key);
     V& operator[](const K& key);
     pair<K, V>* search(const K& key);
 
 private:
     size_t tableSize;
     size_t numElements;
-    MyHashFunction<K> hashFunction;
-    vector<vector<pair<K, V>>> table; //table
+    vector<vector<pair<K, V>>> table;
+    hash<K> hashFunction; 
 };
 
 #endif

@@ -12,6 +12,7 @@
 
 using namespace std;
 
+//hash map tree
 void test_HashMapTree_default_constructor(int &testPassed, int &testFailed);
 void test_HashMapTree_parameterized_constructor(int &testPassed, int &testFailed);
 void test_HashMapTree_copy_constructor(int &testPassed, int &testFailed);
@@ -21,10 +22,22 @@ void test_HashMapTree_remove(int &testPassed, int &testFailed);
 void test_HashMapTree_operator_access(int &testPassed, int &testFailed);
 void test_HashMapTree_search(int &testPassed, int &testFailed);
 
+//hashmap
+// Declare HashMap tests
+void test_HashMap_default_constructor(int &testPassed, int &testFailed);
+void test_HashMap_parameterized_constructor(int &testPassed, int &testFailed);
+void test_HashMap_insert(int &testPassed, int &testFailed);
+void test_HashMap_remove(int &testPassed, int &testFailed);
+void test_HashMap_operator_access(int &testPassed, int &testFailed);
+void test_HashMap_search(int &testPassed, int &testFailed);
+
+
+
 int main() {
     int testPassed = 0;
     int testFailed = 0;
 
+    // HashMapTree tests
     test_HashMapTree_default_constructor(testPassed, testFailed);
     test_HashMapTree_parameterized_constructor(testPassed, testFailed);
     test_HashMapTree_copy_constructor(testPassed, testFailed);
@@ -34,12 +47,22 @@ int main() {
     test_HashMapTree_operator_access(testPassed, testFailed);
     test_HashMapTree_search(testPassed, testFailed);
 
+    // HashMap tests
+    test_HashMap_default_constructor(testPassed, testFailed);
+    test_HashMap_parameterized_constructor(testPassed, testFailed);
+    test_HashMap_insert(testPassed, testFailed);
+    test_HashMap_remove(testPassed, testFailed);
+    test_HashMap_operator_access(testPassed, testFailed);
+    test_HashMap_search(testPassed, testFailed);
+
     cout << "Total Tests: " << testPassed + testFailed << endl;
     cout << "Tests Passed: " << testPassed << endl;
     cout << "Tests Failed: " << testFailed << endl;
 
     return 0;
 }
+
+
 
 //=========================================================
 // Test Default Constructor HashMapTree
@@ -244,3 +267,146 @@ void test_HashMapTree_search(int &testPassed, int &testFailed) {
     }
 }
 
+//=========================================================
+// Test Default Constructor HashMap
+// Purpose:
+//  - Verify that the default constructor initializes with size 100.
+//=========================================================
+void test_HashMap_default_constructor(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map; // Default size = 100
+        if (map.search(1) == nullptr) {
+            testPassed++;
+            cout << "Passed test_HashMap_default_constructor" << endl;
+        } else {
+            testFailed++;
+            cout << "Failed test_HashMap_default_constructor" << endl;
+        }
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_default_constructor: Exception caught" << endl;
+    }
+}
+
+//=========================================================
+// Test Parameterized Constructor HashMap
+// Purpose:
+//  - Verify that the parameterized constructor initializes correctly.
+//=========================================================
+void test_HashMap_parameterized_constructor(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map(50); // Table size = 50
+        if (map.search(1) == nullptr) {
+            testPassed++;
+            cout << "Passed test_HashMap_parameterized_constructor" << endl;
+        } else {
+            testFailed++;
+            cout << "Failed test_HashMap_parameterized_constructor" << endl;
+        }
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_parameterized_constructor: Exception caught" << endl;
+    }
+}
+
+//=========================================================
+// Test Insert HashMap
+// Purpose:
+//  - Verify that values are correctly inserted into the hash map.
+//=========================================================
+void test_HashMap_insert(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map;
+        map.insert(1, "One");
+        map.insert(2, "Two");
+
+        if (map.search(1) != nullptr && map.search(1)->second == "One" &&
+            map.search(2) != nullptr && map.search(2)->second == "Two") {
+            testPassed++;
+            cout << "Passed test_HashMap_insert" << endl;
+        } else {
+            testFailed++;
+            cout << "Failed test_HashMap_insert" << endl;
+        }
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_insert: Exception caught" << endl;
+    }
+}
+
+//=========================================================
+// Test Remove HashMap
+// Purpose:
+//  - Verify that values are correctly removed from the hash map.
+//=========================================================
+void test_HashMap_remove(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map;
+        map.insert(1, "One");
+        map.insert(2, "Two");
+
+        map.remove(1); // Remove key 1
+        if (map.search(1) == nullptr && map.search(2) != nullptr) {
+            testPassed++;
+            cout << "Passed test_HashMap_remove" << endl;
+        } else {
+            testFailed++;
+            cout << "Failed test_HashMap_remove" << endl;
+        }
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_remove: Exception caught" << endl;
+    }
+}
+
+
+//=========================================================
+// Test Operator[] HashMap
+// Purpose:
+//  - Verify that operator[] correctly accesses or updates values.
+//=========================================================
+void test_HashMap_operator_access(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map;
+        map.insert(1, "One");
+
+        if (map[1] == "One") {
+            map[1] = "NewOne";
+            if (map[1] == "NewOne") {
+                testPassed++;
+                cout << "Passed test_HashMap_operator_access" << endl;
+                return;
+            }
+        }
+        testFailed++;
+        cout << "Failed test_HashMap_operator_access" << endl;
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_operator_access: Exception caught" << endl;
+    }
+}
+
+//=========================================================
+// Test Search HashMap
+// Purpose:
+//  - Verify that search correctly locates keys in the hash map.
+//=========================================================
+void test_HashMap_search(int &testPassed, int &testFailed) {
+    try {
+        HashMap<int, string> map;
+        map.insert(1, "One");
+        map.insert(2, "Two");
+
+        if (map.search(1) != nullptr && map.search(1)->second == "One" &&
+            map.search(3) == nullptr) {
+            testPassed++;
+            cout << "Passed test_HashMap_search" << endl;
+        } else {
+            testFailed++;
+            cout << "Failed test_HashMap_search" << endl;
+        }
+    } catch (const exception &e) {
+        testFailed++;
+        cout << "Failed test_HashMap_search: Exception caught" << endl;
+    }
+}
