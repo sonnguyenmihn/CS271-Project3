@@ -1,40 +1,30 @@
-//=========================================================
-// HashMap.hpp
-// Son, Omar, Esther
-// Nov, 2024
-// This is the header file with definitions of functions for the HashMap class.
-//=========================================================
-
 #ifndef HASHMAP_HPP
-#define HASPMAP_HPP
+#define HASHMAP_HPP
 
-#include "MyHashFunction.hpp"
 #include <vector>
+#include <list>
 #include <utility>
+#include <stdexcept>
+#include "MyHashFunction.hpp"
 
-template <class K, class V>
-class HashMap
-{
+using namespace std;
+
+template <typename K, typename V>
+class HashMap {
 public:
-    // Constructor and Destructor
-    HashMap();
-    HashMap(long length);
-    HashMap(const HashMap<K, V> &copy);
+    explicit HashMap(size_t size = 100);
     ~HashMap();
 
-    // Methods
-    HashMap<K, V> &operator=(const HashMap<K, V> &copy);
-    void insert(const K &key, const V &value);
-    void remove(pair<K, V> *item);
-    V &operator[](const K &key);
-    std::pair<K, V> *search(const K &key);
-    MyHashFunction<K> hashFn;
-    long size;
-    std::vector<std::vector<std::pair<K, V>>> table;
+    void insert(const K& key, const V& value);
+    void remove(const K& key);
+    V& operator[](const K& key);
+    pair<K, V>* search(const K& key);
 
 private:
-    long numberOfElements;
+    size_t tableSize;
+    size_t numElements;
+    CustomHashFunction<K> hashFunction;
+    vector<list<pair<K, V>>> table;
 };
 
-#include "HashMap.cpp"
 #endif

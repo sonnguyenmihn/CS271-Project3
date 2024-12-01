@@ -1,83 +1,58 @@
-//=========================================================
-// HashMap.hpp
-// Son, Omar, Esther
-// Nov, 2024
-// This is the implementation file for the HashMap class with functions:
-// Constructors and Destructor, Assignment Operator, Insert, Remove, Accessing Operator
-// Search
-//=========================================================
 #include "HashMap.hpp"
-#include <utility>
 
-using namespace std;
-
-
-
-template<class K, class V>
-HashMap<K, V>::HashMap() : size(100), numberOfElements(0), table(100), hashFn() {}
-
-
-
-template<class K, class V>
-HashMap<K, V>::HashMap(long length) : size(length), numberOfElements(0), table(length), hashFn() {}
-
-
-
-template<class K, class V>
-HashMap<K, V>::HashMap(const HashMap<K ,V>& copy) {
-    *this = copy;
-}
-
-
-
-template<class K, class V>
-HashMap<K, V>::~HashMap() {
-    return ;
-}
-
-
-template<class K, class V>
-HashMap<K, V>& HashMap<K, V>::operator=(const HashMap<K, V>& copy) {
-    if (this != &copy) {
-        size = copy.size;
-        numberOfElements = copy.numberOfElements;
-        hashFn = copy.hashFn;
-        table = copy.table;
+template <typename K, typename V>
+HashMap<K, V>::HashMap(size_t size)
+    : tableSize(size), numElements(0), hashFunction(size), table(size) {
+        
     }
-    return *this;
-}
 
+template <typename K, typename V>
+HashMap<K, V>::~HashMap() = default;
 
-template<class K, class V>
+template <typename K, typename V>
 void HashMap<K, V>::insert(const K& key, const V& value) {
-    pair<K, V>* ptr = search(key);
-
-    if (ptr != nullptr) {
-        ptr->second = value;
+    size_t index = hashFunction.getHash(key);
+    for (auto& pair : table[index]) {
+        if (pair.first == key) {
+            pair.second = value;
+            return;
+        }
     }
-    else {
-        long hashVal = hashFn.getHash(key) % size;
-        pair<K, V> p = make_pair(key, value);
-        table[hashVal].push_back(p);
-        numberOfElements++;
-    }
+    table[index].emplace_back(key, value);
+    ++numElements;
 }
 
-
-
-template<class K, class V>
-void HashMap<K, V>::remove(pair<K, V>* item) {
-    
+template <typename K, typename V>
+void HashMap<K, V>::remove(const K& key) {
+    size_t index = hashFunction.getHash(key);
+    for (auto it = table[index].begin(); it != table[index].end(); ++it) {
+        if (it->first == key) {
+            table[index].erase(it);
+            --numElements;
+            return;
+        }
+    }
+    throw invalid_argument("Key not found");
 }
 
-
-template<class K, class V>
+template <typename K, typename V>
 V& HashMap<K, V>::operator[](const K& key) {
-
+    size_t index = hashFunction.getHash(key);
+    for (auto& pair : table[index]) {
+        if (pair.first == key) {
+            return pair.second;
+        }
+    }
+    throw invalid_argument("Key not found");
 }
 
-
-template<class K, class V>
+template <typename K, typename V>
 pair<K, V>* HashMap<K, V>::search(const K& key) {
-
+    size_t index = hashFunction.getHash(key);
+    for (auto& pair : table[index]) {
+        if (pair.first == key) {
+            return &pair;
+        }
+    }
+    return nullptr;
 }
