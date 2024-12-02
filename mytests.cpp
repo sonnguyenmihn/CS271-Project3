@@ -434,7 +434,7 @@ void test_HashMap_search(int &testPassed, int &testFailed) {
 void test_Set_default_constructor(int &testPassed, int &testFailed) {
     try {
         Set<int> set; // Empty set
-        if (set.search(root) == false) {
+        if (set.search(1) == false) {
             testPassed++;
             cout << "Passed test_Set_default_constructor" << endl;
         } else {
@@ -455,13 +455,14 @@ void test_Set_default_constructor(int &testPassed, int &testFailed) {
 void test_Set_copy_constructor(int &testPassed, int &testFailed) {
     try {
         Set<int> set;
+        Set<int> copySet;
         set.insert(5);
         set.insert(7);
         set.insert(1);
 
-        copySet = set(set);
+        copySet = Set(set);
 
-        if (copySet.search(root) == true) {
+        if (copySet.search(5) == true) {
             testPassed++;
             cout << "Passed test_Set_copy_constructor" << endl;
         } else {
@@ -486,9 +487,9 @@ void test_Set_deconstructor(int &testPassed, int &testFailed) {
         set.insert(7);
         set.insert(1);
 
-        ~set();
+        set.~Set();
 
-        if (set.search(root) == false) {
+        if (set.search(5) == false) {
             testPassed++;
             cout << "Passed test_Set_deconstructor" << endl;
         } else {
@@ -545,7 +546,7 @@ try {
         set.insert(4);
 
         set.remove(4);
-        set.remobe(3);
+        set.remove(3);
 
         if (set.search(4) == false && set.search(3) == false) {
             testPassed++;
