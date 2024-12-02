@@ -21,9 +21,9 @@ private:
     
 public:
     //Constructors and Destructor
-    set();
-    set(const Set& s);
-    ~set();
+    Set();
+    Set(const Set& s);
+    ~Set();
 
     //Functions
     void insert(const T &value);
