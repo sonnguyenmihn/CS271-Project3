@@ -7,6 +7,7 @@
 //=========================================================
 #include <iostream>
 #include "Set.hpp"
+#include "customexceptions.hpp"
 
 using namespace std;
 
@@ -20,8 +21,8 @@ using namespace std;
 //=========================================================
 template<class T>
 Set<T>::Set(){
-    root = NULL;
-    size = 0;
+    RBT.root = NULL;
+    RBT.size = 0;
 }
 
 //=========================================================
@@ -34,8 +35,8 @@ Set<T>::Set(){
 //=========================================================
 template<class T>
 Set<T>::Set(const Set& s){
-    root = s.root;
-    size = s.size;
+    RBT.root = s.root;
+    RBT.size = s.size;
 }
 
 //=========================================================
@@ -49,9 +50,7 @@ Set<T>::Set(const Set& s){
 //=========================================================
 template<class T>
 Set<T>::~Set(){
-    if (size != nullptr) {
-        delete root;
-    }
+    delete RBT.root;
 }
 //=========================================================
 // Inserts a pointer with a value into the Set
@@ -81,13 +80,12 @@ void Set<T>::insert(const T &value) {
 //=========================================================
 template<class T>
 void Set<T>::remove(const T &value) {
-    if (search(value) == false) { //Need to implement throw
-        return;
-    }
-
-    else if (search(value) == true) {
+    
+    if (search(value) == true) {
         RBT.remove(value);
     }
+
+    throw invalid_argument("Value not found");
 }
 
 //=========================================================
@@ -118,5 +116,5 @@ bool Set<T>::search(const T &value) {
 //=========================================================
 template<class T>
 void Set<T>::printSet() {
-    printPreOrderTraversal();
+    RBT.printPreOrderTraversal();
 }
