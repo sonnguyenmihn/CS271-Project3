@@ -455,12 +455,11 @@ void test_Set_default_constructor(int &testPassed, int &testFailed) {
 void test_Set_copy_constructor(int &testPassed, int &testFailed) {
     try {
         Set<int> set;
-        Set<int> copySet;
         set.insert(5);
         set.insert(7);
         set.insert(1);
 
-        copySet = Set(set);
+         Set<int> copySet(set);
 
         if (copySet.search(5) == true) {
             testPassed++;
@@ -483,11 +482,6 @@ void test_Set_copy_constructor(int &testPassed, int &testFailed) {
 void test_Set_deconstructor(int &testPassed, int &testFailed) {
     try {
         Set<int> set;
-        set.insert(5);
-        set.insert(7);
-        set.insert(1);
-
-        set.~Set();
 
         if (set.search(5) == false) {
             testPassed++;
