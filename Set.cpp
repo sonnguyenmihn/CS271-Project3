@@ -19,7 +19,7 @@ using namespace std;
 //   None
 //=========================================================
 template<class T>
-Set<T>::set(){
+Set<T>::Set(){
     root = NULL;
     size = 0;
 }
@@ -33,7 +33,7 @@ Set<T>::set(){
 //    None
 //=========================================================
 template<class T>
-Set<T>::set(const Set& s){
+Set<T>::Set(const Set& s){
     root = s.root;
     size = s.size;
 }
@@ -48,10 +48,11 @@ Set<T>::set(const Set& s){
 //   None
 //=========================================================
 template<class T>
-Set<T>::~set(){
-    //Delt with through the Red Black Tree Destructor
+Set<T>::~Set(){
+    if (size != nullptr) {
+        delete root;
+    }
 }
-
 //=========================================================
 // Inserts a pointer with a value into the Set
 // If the value already exists returns with a coustom exception
